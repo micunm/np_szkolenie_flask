@@ -28,6 +28,6 @@ def display_urls():
 
 
 if __name__ == '__main__':
-    obtain_value()
-    display_request()
-    display_urls()
+    #obtain_value()
+    #display_request()
+    #display_urls()

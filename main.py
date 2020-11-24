@@ -5,7 +5,7 @@ app = Flask(__name__)
 Bootstrap(app)
 
 
-@app.route('/')
+@app.route('/asdf/')
 def index():
     # show request here
     user_info = {
@@ -15,11 +15,13 @@ def index():
     return render_template('index.html', user_info=user_info)
 
 
-@app.route('/user/<name>/<amount>/')
+@app.route('/some_user/<name>/<amount>/')
 def hello_from_kwargs(name, amount):
     amount = int(amount)
     return render_template('hello_from_kwargs.html', name=name, amount=amount)
 
+#testowo:
+app.add_url_rule('/', 'index', index)
 
 if __name__ == '__main__':
     app.run()
