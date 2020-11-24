@@ -1,0 +1,28 @@
+<h1>Hello string, {{ name }} ({{ amount }})!</h1>
+
+{% for i in range(10) %}
+    {{ i }}
+{% endfor %}
+
+{% if name == 'Admin' %}
+    <li>{{ name }} </li>
+{% else %}
+    <ul>
+    {% for i in range(amount) %}
+        {% if (loop.index)%2 == 1 %}
+            <strong><li>{{ name }} </li></strong>
+        {% elif name == 'kate' %}
+            <li>{{ name }} </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{% if name == 'chris' %}
+    <div>He's chris</div>
+{% elif name == 'kate' %}
+    <div>he's cate</div>
+{% else %}
+    <div>he's nor chris or kate</div>
+{% endif %}
+
