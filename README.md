@@ -15,7 +15,7 @@ SECRET_KEY required (https://pinetools.com/random-string-generator)
 Add it in pyCharm config run.
 
 ## Assignments
-* Display name of logged in user in top right corner, or 'Unknown'
+* Display name of logged in user in top right corner, or 'Unknown' - z sesji
 * Add new field in form - `age` and save value in `session`.
 This field should be positive integer, so IntegerField and NumberRange should be used.
 If `age` isn't present in session - display 0.

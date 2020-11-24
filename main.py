@@ -9,17 +9,20 @@ from flask import (
 )
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms import StringField, SubmitField, IntegerField
+from wtforms.validators import DataRequired, ValidationError, NumberRange
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+#nierekomendowane
+#app.config['SECRET_KEY']='123'
 Bootstrap(app)
 
 
 class LoginForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
+    age=IntegerField('age', validators=[DataRequired(), NumberRange(min=0)])
     submit = SubmitField('Submit')
 
     def validate_name(self, field):
@@ -31,7 +34,8 @@ class LoginForm(FlaskForm):
 def index():
     user_info = {
         'name': session.get('name', 'Unknown'),
-        'age': int(request.args.get('age', 42)),
+        'age': session.get('age', 0),
+        #'age': int(request.args.get('age', 42)),
     }
     return render_template('index.html', user_info=user_info)
 
@@ -42,9 +46,15 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         session['name'] = form.name.data
+        session['age'] = form.age.data
         return redirect(url_for('index'))
     return render_template('auth/login.html', form=form)
 
+@app.route('/logout/')
+def logout():
+    del session['name']
+    del session['age']
+    return redirect(urf_for('index'))
 
 @app.route('/user/<name>/<amount>/')
 def hello_from_kwargs(name, amount):
