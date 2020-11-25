@@ -8,24 +8,32 @@ from flask import (
 )
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField
-from wtforms.validators import DataRequired, NumberRange, ValidationError
+from wtforms import StringField, IntegerField, SubmitField, PasswordField, RadioField
+from wtforms.validators import DataRequired, NumberRange, ValidationError, EqualTo, Email, Optional
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 Bootstrap(app)
 
+Sexes=[('m','Male'), ('f','Female')]
 
 class LoginForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])
     age = IntegerField('age', validators=[DataRequired(), NumberRange(min=0)])
+    sex=RadioField('Sex', choices=Sexes, validators=[Optional()])
+    email = StringField('email', validators=[DataRequired(), Email()])
+    password = PasswordField('password', validators=[DataRequired()])
+    password2 = PasswordField('password2', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Submit')
 
     def validate_name(self, field):
         if field.data and field.data.lower() == 'admin':
             raise ValidationError("You can't log in as admin")
 
+    def validate_email(self, field):
+        if field.data and field.data.split('@')[-1] != 'protonmail.com':
+            raise ValidationError("You can't log in as admin")
 
 @app.route('/')
 def index():
