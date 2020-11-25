@@ -23,11 +23,21 @@ from wtforms.validators import (
     NumberRange,
     ValidationError,
 )
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+current_dir = os.path.dirname(__file__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(current_dir, 'test.db')}"
 Bootstrap(app)
+db = SQLAlchemy(app)
 
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.username
 
 class LoginForm(FlaskForm):
     name = StringField('name', validators=[DataRequired()])

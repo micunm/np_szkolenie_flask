@@ -6,4 +6,4 @@ if __name__ == '__main__':
     current_dir = os.path.dirname(__file__)
     print(current_dir)
     print(os.path.join(current_dir, '..'))
-    print(os.path.join(current_dir, 'subdir1', 'subdir2'))
+    print(os.path.abspath(os.path.join(current_dir, 'subdir1', 'subdir2')))
