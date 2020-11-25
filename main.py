@@ -5,7 +5,7 @@ from flask import (
     request,
     redirect,
     url_for,
-    session
+    session, flash
 )
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -47,6 +47,7 @@ def index():
         'name': session.get('name', 'Unknown'),
         'age': session.get('age', 0),
     }
+    flash('You were successfully logged in')
     return render_template('index.html', user_info=user_info)
 
 
@@ -62,6 +63,7 @@ def login():
     if form.validate_on_submit():
         session['name'] = form.name.data
         session['age'] = form.age.data
+        flash('You were successfully logged in', 'info')
         return redirect(url_for('index'))
     return render_template('auth/login.html', form=form)
 
@@ -72,6 +74,7 @@ def logout():
         del session['name']
     if 'name' in session:
         del session['age']
+    flash('You were successfully logged out!', 'danger')
     return redirect(url_for('index'))
 
 
