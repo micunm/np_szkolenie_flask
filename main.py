@@ -47,11 +47,11 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-@app.route('/logout/', methods=['GET', 'POST'])
+@app.route('/logout/', methods=['GET'])
 def logout():
     if 'name' in session:
         del session['name']
-    if 'name' in session:
+    if 'age' in session:
         del session['age']
     return redirect(url_for('index'))
 
