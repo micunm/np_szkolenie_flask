@@ -20,7 +20,7 @@ def login():
         flash('You were successfully logged in')
         session['name'] = form.name.data
         session['age'] = form.age.data
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     return render_template('auth/login.html', form=form)
 
 
